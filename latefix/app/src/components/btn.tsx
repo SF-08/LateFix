@@ -14,7 +14,7 @@ export default Btn
 const styles = StyleSheet.create({
   button: {
     height: 70,
-    backgroundColor: 'black',
+    backgroundColor: '#802392',
     borderRadius: 10,
     borderTopEndRadius: 0,
     display: 'flex',
