@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 export const SignUpPage: React.FC = () => {
     const [email, setEmail] = useState('');
