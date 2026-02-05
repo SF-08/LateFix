@@ -1,16 +1,21 @@
-import 'react-native-url-polyfill/auto'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { createClient, processLock } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
+import { setupURLPolyfill } from 'react-native-url-polyfill'
 
-export const supabase = createClient(
-  process.env.EXPO_PUBLIC_SUPABASE_URL!,
-  process.env.EXPO_PUBLIC_SUPABASE_KEY!,
-  {
-    auth: {
-      storage: AsyncStorage,
-      autoRefreshToken: true,
-      persistSession: true,
-      detectSessionInUrl: false,
-      lock: processLock,
-    },
-  })
+setupURLPolyfill()
+
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_KEY
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables. Please check your .env file.')
+}
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    detectSessionInUrl: false,
+    storage: AsyncStorage,
+  },
+})
+
+export default supabase
