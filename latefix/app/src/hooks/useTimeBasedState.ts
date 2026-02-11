@@ -11,6 +11,9 @@ export interface ScheduleEntry {
     endMinute: number
 }
 
+
+// Set times of day for each mascot state.
+
 export const defaultSchedule: ScheduleEntry[] = [
     { state: "sleeping", label: "Sleeping", startHour: 0, startMinute: 0, endHour: 6, endMinute: 0 },
     { state: "waking", label: "Waking", startHour: 6, startMinute: 0, endHour: 7, endMinute: 0 },
