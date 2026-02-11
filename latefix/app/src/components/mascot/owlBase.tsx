@@ -210,5 +210,39 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
         </motion.g>
 
         {/* Owl Face */}
+        <ellipse cx="100" cy="100" rx="38" ry="35" fill={bodyLight} opacity="0.5" />
+
+        {/* Eye Sockets */}
+        <circle cx="80" cy="98" r="18" fill={bodyDark} opacity="0.3" />
+        <circle cx="120" cy="98" r="18" fill={bodyDark} opacity="0.3" />
+
+        {/* Eyes */}
+        <g>
+            {/* Left Eye */}
+            <motion.g
+                animate={{ scaleY: eyeState.leftOpen }}
+                transition={{ duration: 0.4, ease: "easeInOut"}}
+                style={{ originX: "80px", originY: "98px"}}
+            >
+                <circle cx="80" cy="98" r="14" fill={eyeWhite} />
+                <motion.circle
+                    cx="80"
+                    cy="98"
+                    r="8"
+                    fill={pupilColour}
+                    animate={{
+                        cx: state === "reminding" ? [80, 84, 76, 80] : state === "idle" ? [80, 82, 78, 80] : 80,
+                        scale: eyeState.pupilScale,
+                    }}  
+                    transition={{
+                        duration: state === "reminding" ? 0.8 : 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
+                />
+                
+            </motion.g>
+
+        </g>
 
         </svg>
