@@ -67,4 +67,19 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
                     <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000" floodOpacity="0.3" />
                 </filter>
             </defs>
+
+            {/* Background Glow */}
+            <motion.circle
+                cx="100"
+                cy="105"
+                r="85"
+                fill={`url(#glow-${state})`}
+                animate={{
+                    r: state === "celebrating" ? [85, 95, 85 ] : 85,
+                    opacity: state === "sleeping" ? 0.3 : 1,
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+            />
+
+            
         </svg>
