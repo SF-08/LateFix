@@ -55,3 +55,9 @@ export function useTimeBasedState(schedule: ScheduleEntry[] = defaultSchedule) {
 
     return { state, currentTime };
 }
+
+export function formatTime(h: number, m: number): string {
+    const period = h >= 12 ? "PM" : "AM";
+    const formattedH = h % 12 || 12;
+    return `${formattedH}:${m.toString().padStart(2, '0')} ${period}`;
+}
