@@ -189,4 +189,26 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
             }}
         />
 
+        {/* Owl Ear */}
+        <motion.g
+            animate={{
+                rotate: state === "alert" ? [ 0, 5, -5, 0] : state === "reminding" ? [0, 8, -8, 0] : 0,
+            }}
+            transition={{
+                duration: 1,
+                repeat: Infinity
+            }}
+            style={{
+                originX: "100px",
+                originY: "60px",
+            }}
+        >
+            <path d="M65 78 L55 45 L78 72Z" fill={bodyColour} />
+            <path d="M62 73 L55 48 L72 70Z" fill={bodyLight} />
+            <path d="M135 78 L145 45 L122 72Z" fill={bodyColour} />
+            <path d="M138 73 L145 48 L128 70Z" fill={bodyLight} />
+        </motion.g>
+
+        {/* Owl Face */}
+
         </svg>
