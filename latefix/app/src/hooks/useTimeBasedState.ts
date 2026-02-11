@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, use } from 'react';
 import type { MascotState } from 
+    import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 export interface ScheduleEntry {
     state: MascotState
@@ -22,4 +23,35 @@ export const defaultSchedule: ScheduleEntry[] = [
 
 function toMinutes(h: number, m: number) {
     return h * 60 + m;
+}
+
+function getStateForTime(schedule: ScheduleEntry[], date: Date): MascotState {
+    const now = toMinutes(date.getHours(), date.getMinutes());
+
+    for (const entry of schedule) {
+        const start = toMinutes(entry.startHour, entry.startMinute);
+        const end = toMinutes(entry.endHour, entry.endMinute);
+        if (now >= start && now < end) {
+            return entry.state;
+        }
+    }
+
+    return "idle"; // Default state if no schedule entry matches
+}
+
+export function useTimeBasedState(schedule: ScheduleEntry[] = defaultSchedule) {
+    const [currentTime, setCurrentTime] = useState<Date>(new Date());
+
+    const state = getStateForTime(schedule, currentTime);
+
+    const update = useCallback(() => {
+        setCurrentTime(new Date());
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(update, 10_000) // Checks every 10 seconds.
+        return () => clearInterval(interval);
+    }, [update]);
+
+    return { state, currentTime };
 }
