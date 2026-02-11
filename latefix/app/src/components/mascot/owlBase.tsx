@@ -86,10 +86,10 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
                 animate={{
                     y: state === "celebrating" ? [-2, 2, -2] : 0,
                 }}
-                transition={{ duration: 0.3, repeat: state === "celebrating" ? Infinity : 0 }
-            >
-                <ellipse cx="80" cy="170" rx="12" ry="5" fill={feetColour} />
-                <ellipse cx="120" cy="170" rx="12" ry="5" fill={feetColour} />
+                transition={{ duration: 0.3, repeat: state === "celebrating" ? Infinity : 0 }}
+      >
+        <ellipse cx="80" cy="170" rx="12" ry="5" fill={feetColour} />
+        <ellipse cx="120" cy="170" rx="12" ry="5" fill={feetColour} />
                 {/* Toes */}
                 <circle cx="72" cy="172" r="3" fill={feetColour} />
                 <circle cx="80" cy="174" r="3" fill={feetColour} />
@@ -99,6 +99,35 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
                 <circle cx="128" cy="172" r="3" fill={feetColour} />            
             </motion.g>
 
-            
+            {/* Owl Body */}
+           <motion.g
+        filter="url(#shadow)"
+        animate={{
+          y: state === "sleeping" ? [0, 2, 0] : state === "celebrating" ? [0, -8, 0] : state === "waving" ? [0, -3, 0] : state === "idle" ? [0, -2, 0] : 0,
+          rotate: state === "celebrating" ? [0, -3, 3, 0] : state === "waving" ? [0, -2, 2, 0] : state === "waking" ? [0, -1, 1, 0] : 0,
+        }}
+        transition={{
+          duration: state === "sleeping" ? 3 : state === "celebrating" ? 0.5 : state === "waving" ? 1.2 : 2.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        style={{ originX: "100px", originY: "120px" }}
+      >
+        {/* Main body */}
+        <ellipse cx="100" cy="120" rx="52" ry="55" fill={bodyColour} />
+
+        {/* Belly */}
+        <ellipse cx="100" cy="132" rx="32" ry="34" fill={belly} opacity="0.4" />
+
+        {/* Belly pattern - chevrons */}
+        <motion.g opacity={state === "sleeping" ? 0.3 : 0.6}>
+          <path d="M85 120 L100 126 L115 120" stroke={bodyDark} strokeWidth="1.5" fill="none" />
+          <path d="M87 128 L100 134 L113 128" stroke={bodyDark} strokeWidth="1.5" fill="none" />
+          <path d="M89 136 L100 142 L111 136" stroke={bodyDark} strokeWidth="1.5" fill="none" />
+          <path d="M91 144 L100 150 L109 144" stroke={bodyDark} strokeWidth="1.5" fill="none" />
+        </motion.g>
+
+        {/* Left Wing */}
+        
 
         </svg>
