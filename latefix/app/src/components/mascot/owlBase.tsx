@@ -81,5 +81,24 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
                 transition={{ duration: 2, repeat: Infinity }}
             />
 
+            {/* Owl Feet */}
+            <motion.g
+                animate={{
+                    y: state === "celebrating" ? [-2, 2, -2] : 0,
+                }}
+                transition={{ duration: 0.3, repeat: state === "celebrating" ? Infinity : 0 }
+            >
+                <ellipse cx="80" cy="170" rx="12" ry="5" fill={feetColour} />
+                <ellipse cx="120" cy="170" rx="12" ry="5" fill={feetColour} />
+                {/* Toes */}
+                <circle cx="72" cy="172" r="3" fill={feetColour} />
+                <circle cx="80" cy="174" r="3" fill={feetColour} />
+                <circle cx="88" cy="172" r="3" fill={feetColour} />
+                <circle cx="112" cy="172" r="3" fill={feetColour} />
+                <circle cx="120" cy="174" r="3" fill={feetColour} />
+                <circle cx="128" cy="172" r="3" fill={feetColour} />            
+            </motion.g>
+
             
+
         </svg>
