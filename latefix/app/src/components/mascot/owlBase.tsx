@@ -128,6 +128,32 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
         </motion.g>
 
         {/* Left Wing */}
+        <motion.path
+            d="M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z"
+            fill={bodyDark}
+            animate={{
+                d: 
+                state === "celebrating"
+                ? [
+                    "M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z",
+                    "M35 85 C20 105 28 140 50 155 C50 130 40 108 35 85Z",
+                    "M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z",
+                ]
+            : state === "reminding"
+                ? [
+                    "M48 100 C35 38 150 55 160 C55 140 50 120 48 100Z",
+                    "M40 95 C25 115 30 148 52 158 C52 135 45 113 40 95Z",
+                    "M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z",
+                ]
+                : "M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z"
+            }}
+            transition={{ 
+                duration: state === "celebrating" ? 0.4 : 1,
+                repeat: Infinity,
+                ease: "easeInOut",
+            }}
+        />
+
         
 
         </svg>
