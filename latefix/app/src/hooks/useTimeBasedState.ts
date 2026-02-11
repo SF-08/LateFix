@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, use } from 'react';
-import type { MascotState } from 
-    import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import type { MascotState } from '../components/mascot/owlBase';
 
 export interface ScheduleEntry {
     state: MascotState
