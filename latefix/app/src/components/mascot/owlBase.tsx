@@ -1,113 +1,145 @@
 import { motion } from "framer-motion";
 
 export type MascotState =
-    | "sleeping"
-    | "waking"
-    | "alert"
-    | "celebrating"
-    | "reminding"
-    | "waving"
-    | "idle"
+  | "sleeping"
+  | "waking"
+  | "alert"
+  | "celebrating"
+  | "reminding"
+  | "waving"
+  | "idle";
 
 interface OwlBaseProps {
-    state: MascotState;
-    size?: number;
-    className?: string;
+  state: MascotState;
+  size?: number;
+  className?: string;
 }
 
 export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
-    const bodyColour = "#802392"
-    const bodyLight = "#9b3aad"
-    const bodyDark = "#5e1a6b"
-    const belly = "#c88fd6"
-    const eyeWhite = "#f0e6f4"
-    const pupilColour = "#2d0a38"
-    const beakColour = "#e8a84c"
-    const feetColour = "#e8a84c"
-    const blush = "#c060d0"
-    const capColour = "#5e1a6b"
+  const bodyColour = "#802392";
+  const bodyLight = "#9b3aad";
+  const bodyDark = "#5e1a6b";
+  const belly = "#c88fd6";
+  const eyeWhite = "#f0e6f4";
+  const pupilColour = "#2d0a38";
+  const beakColour = "#e8a84c";
+  const feetColour = "#e8a84c";
+  const blush = "#c060d0";
+  const capColour = "#5e1a6b";
 
-    const getEyeState = () => {
-        switch (state) {
-            case "sleeping":
-                return { leftOpen: 0, rightOpen: 0.3, pupilScale: 0.7 }
-            case "waking":
-                return { leftOpen: 0.5, rightOpen: 0.3, pupilScale: 0.7 }  
-            case "alert":
-                return { leftOpen: 1, rightOpen: 1, pupilScale: 1 }
-            case "celebrating":
-                return { leftOpen: 1, rightOpen: 1, pupilScale: 0.8 }
-            case "reminding":
-                return { leftOpen: 1, rightOpen: 1, pupilScale: 1.1 }
-            case "waving":
-                return { leftOpen: 1, rightOpen: 0.9, pupilScale: 0.9 }
-            case "idle":
-                return { leftOpen: 0.8, rightOpen: 0.85, pupilScale: 0.9 }
-        }
+  const getEyeState = () => {
+    switch (state) {
+      case "sleeping":
+        return { leftOpen: 0, rightOpen: 0.3, pupilScale: 0.7 };
+      case "waking":
+        return { leftOpen: 0.5, rightOpen: 0.3, pupilScale: 0.7 };
+      case "alert":
+        return { leftOpen: 1, rightOpen: 1, pupilScale: 1 };
+      case "celebrating":
+        return { leftOpen: 1, rightOpen: 1, pupilScale: 0.8 };
+      case "reminding":
+        return { leftOpen: 1, rightOpen: 1, pupilScale: 1.1 };
+      case "waving":
+        return { leftOpen: 1, rightOpen: 0.9, pupilScale: 0.9 };
+      case "idle":
+        return { leftOpen: 0.8, rightOpen: 0.85, pupilScale: 0.9 };
     }
+  };
 
-    const eyeState = getEyeState();
+  const eyeState = getEyeState();
 
-    return (
-        <svg
-            width={size}
-            height={size}
-            viewBox="0 0 200 200"
-            className = {className}
-            role="img"
-            aria-label={`Mascot in ${state} state`}
-        >
-            {/* Glow effect behind Mascot */}
-            <defs>
-                <radialGradient id={`glow-${state}`} cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor={bodyColour} stopOpacity="0.3" />
-                    <stop offset="100%" stopColor={bodyColour} stopOpacity="0" />
-                </radialGradient>
-                <filter id="shadow">
-                    <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000" floodOpacity="0.3" />
-                </filter>
-            </defs>
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 200 200"
+      className={className}
+      role="img"
+      aria-label={`Mascot in ${state} state`}
+    >
+      {/* Glow effect behind Mascot */}
+      <defs>
+        <radialGradient id={`glow-${state}`} cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor={bodyColour} stopOpacity="0.3" />
+          <stop offset="100%" stopColor={bodyColour} stopOpacity="0" />
+        </radialGradient>
+        <filter id="shadow">
+          <feDropShadow
+            dx="0"
+            dy="2"
+            stdDeviation="3"
+            floodColor="#000"
+            floodOpacity="0.3"
+          />
+        </filter>
+      </defs>
 
-            {/* Background Glow */}
-            <motion.circle
-                cx="100"
-                cy="105"
-                r="85"
-                fill={`url(#glow-${state})`}
-                animate={{
-                    r: state === "celebrating" ? [85, 95, 85 ] : 85,
-                    opacity: state === "sleeping" ? 0.3 : 1,
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-            />
+      {/* Background Glow */}
+      <motion.circle
+        cx="100"
+        cy="105"
+        r="85"
+        fill={`url(#glow-${state})`}
+        animate={{
+          r: state === "celebrating" ? [85, 95, 85] : 85,
+          opacity: state === "sleeping" ? 0.3 : 1,
+        }}
+        transition={{ duration: 2, repeat: Infinity }}
+      />
 
-            {/* Owl Feet */}
-            <motion.g
-                animate={{
-                    y: state === "celebrating" ? [-2, 2, -2] : 0,
-                }}
-                transition={{ duration: 0.3, repeat: state === "celebrating" ? Infinity : 0 }}
+      {/* Owl Feet */}
+      <motion.g
+        animate={{
+          y: state === "celebrating" ? [-2, 2, -2] : 0,
+        }}
+        transition={{
+          duration: 0.3,
+          repeat: state === "celebrating" ? Infinity : 0,
+        }}
       >
         <ellipse cx="80" cy="170" rx="12" ry="5" fill={feetColour} />
         <ellipse cx="120" cy="170" rx="12" ry="5" fill={feetColour} />
-                {/* Toes */}
-                <circle cx="72" cy="172" r="3" fill={feetColour} />
-                <circle cx="80" cy="174" r="3" fill={feetColour} />
-                <circle cx="88" cy="172" r="3" fill={feetColour} />
-                <circle cx="112" cy="172" r="3" fill={feetColour} />
-                <circle cx="120" cy="174" r="3" fill={feetColour} />
-                <circle cx="128" cy="172" r="3" fill={feetColour} />            
-            </motion.g>
+        {/* Toes */}
+        <circle cx="72" cy="172" r="3" fill={feetColour} />
+        <circle cx="80" cy="174" r="3" fill={feetColour} />
+        <circle cx="88" cy="172" r="3" fill={feetColour} />
+        <circle cx="112" cy="172" r="3" fill={feetColour} />
+        <circle cx="120" cy="174" r="3" fill={feetColour} />
+        <circle cx="128" cy="172" r="3" fill={feetColour} />
+      </motion.g>
 
-            {/* Owl Body */}
-           <motion.g
+      {/* Owl Body */}
+      <motion.g
         filter="url(#shadow)"
         animate={{
-          y: state === "sleeping" ? [0, 2, 0] : state === "celebrating" ? [0, -8, 0] : state === "waving" ? [0, -3, 0] : state === "idle" ? [0, -2, 0] : 0,
-          rotate: state === "celebrating" ? [0, -3, 3, 0] : state === "waving" ? [0, -2, 2, 0] : state === "waking" ? [0, -1, 1, 0] : 0,
+          y:
+            state === "sleeping"
+              ? [0, 2, 0]
+              : state === "celebrating"
+                ? [0, -8, 0]
+                : state === "waving"
+                  ? [0, -3, 0]
+                  : state === "idle"
+                    ? [0, -2, 0]
+                    : 0,
+          rotate:
+            state === "celebrating"
+              ? [0, -3, 3, 0]
+              : state === "waving"
+                ? [0, -2, 2, 0]
+                : state === "waking"
+                  ? [0, -1, 1, 0]
+                  : 0,
         }}
         transition={{
-          duration: state === "sleeping" ? 3 : state === "celebrating" ? 0.5 : state === "waving" ? 1.2 : 2.5,
+          duration:
+            state === "sleeping"
+              ? 3
+              : state === "celebrating"
+                ? 0.5
+                : state === "waving"
+                  ? 1.2
+                  : 2.5,
           repeat: Infinity,
           ease: "easeInOut",
         }}
@@ -121,96 +153,129 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
 
         {/* Belly pattern - chevrons */}
         <motion.g opacity={state === "sleeping" ? 0.3 : 0.6}>
-          <path d="M85 120 L100 126 L115 120" stroke={bodyDark} strokeWidth="1.5" fill="none" />
-          <path d="M87 128 L100 134 L113 128" stroke={bodyDark} strokeWidth="1.5" fill="none" />
-          <path d="M89 136 L100 142 L111 136" stroke={bodyDark} strokeWidth="1.5" fill="none" />
-          <path d="M91 144 L100 150 L109 144" stroke={bodyDark} strokeWidth="1.5" fill="none" />
+          <path
+            d="M85 120 L100 126 L115 120"
+            stroke={bodyDark}
+            strokeWidth="1.5"
+            fill="none"
+          />
+          <path
+            d="M87 128 L100 134 L113 128"
+            stroke={bodyDark}
+            strokeWidth="1.5"
+            fill="none"
+          />
+          <path
+            d="M89 136 L100 142 L111 136"
+            stroke={bodyDark}
+            strokeWidth="1.5"
+            fill="none"
+          />
+          <path
+            d="M91 144 L100 150 L109 144"
+            stroke={bodyDark}
+            strokeWidth="1.5"
+            fill="none"
+          />
         </motion.g>
 
         {/* Left Wing */}
         <motion.path
-            d="M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z"
-            fill={bodyDark}
-            animate={{
-                d: 
-                state === "celebrating"
+          d="M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z"
+          fill={bodyDark}
+          animate={{
+            d:
+              state === "celebrating"
                 ? [
                     "M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z",
                     "M35 85 C20 105 28 140 50 155 C50 130 40 108 35 85Z",
                     "M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z",
-                ]
-            : state === "reminding"
-                ? [
-                    "M48 100 C35 38 150 55 160 C55 140 50 120 48 100Z",
-                    "M40 95 C25 115 30 148 52 158 C52 135 45 113 40 95Z",
-                    "M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z",
-                ]
-                : "M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z"
-            }}
-            transition={{ 
-                duration: state === "celebrating" ? 0.4 : 1,
-                repeat: Infinity,
-                ease: "easeInOut",
-            }}
+                  ]
+                : state === "reminding"
+                  ? [
+                      "M48 100 C35 38 150 55 160 C55 140 50 120 48 100Z",
+                      "M40 95 C25 115 30 148 52 158 C52 135 45 113 40 95Z",
+                      "M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z",
+                    ]
+                  : "M48 100 C35 120 38 150 55 160 C55 140 50 120 48 100Z",
+          }}
+          transition={{
+            duration: state === "celebrating" ? 0.4 : 1,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         />
 
         {/* Right Wing */}
         <motion.path
-            d="M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z"
-            fill={bodyDark}
-            animate={{
-                d:
-                state === "waving"
+          d="M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z"
+          fill={bodyDark}
+          animate={{
+            d:
+              state === "waving"
                 ? [
                     "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
                     "M160 75 C185 65 190 85 175 100 C170 90 165 80 160 75Z",
                     "M160 75 C190 55 195 80 178 95 C172 85 168 76 160 75Z",
                     "M160 75 C185 65 190 85 175 100 C170 90 165 80 160 75Z",
                     "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
-                ]
+                  ]
                 : state === "celebrating"
-                ? [
-                    "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
-                    "M165 85 C180 105 172 140 150 155 C150 130 160 108 165 85Z",
-                    "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
-                ]
-                : state === "reminding"
-                ? [
-                    "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
-                    "M160 95 C175 115 170 148 148 158 C148 135 158 113 160 95Z",
-                    "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
-                ]
-                : "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
-            }}
-            transition={{
-                duration: state === "waving" ? 1.4 : state === "celebrating" ? 0.4 : 1,
-                repeat: Infinity,
-                ease: "easeInOut",
-            }}
+                  ? [
+                      "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
+                      "M165 85 C180 105 172 140 150 155 C150 130 160 108 165 85Z",
+                      "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
+                    ]
+                  : state === "reminding"
+                    ? [
+                        "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
+                        "M160 95 C175 115 170 148 148 158 C148 135 158 113 160 95Z",
+                        "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
+                      ]
+                    : "M152 100 C165 120 162 150 145 160 C145 140 150 120 152 100Z",
+          }}
+          transition={{
+            duration:
+              state === "waving" ? 1.4 : state === "celebrating" ? 0.4 : 1,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         />
 
         {/* Owl Ear */}
         <motion.g
-            animate={{
-                rotate: state === "alert" ? [ 0, 5, -5, 0] : state === "reminding" ? [0, 8, -8, 0] : 0,
-            }}
-            transition={{
-                duration: 1,
-                repeat: Infinity
-            }}
-            style={{
-                originX: "100px",
-                originY: "60px",
-            }}
+          animate={{
+            rotate:
+              state === "alert"
+                ? [0, 5, -5, 0]
+                : state === "reminding"
+                  ? [0, 8, -8, 0]
+                  : 0,
+          }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+          }}
+          style={{
+            originX: "100px",
+            originY: "60px",
+          }}
         >
-            <path d="M65 78 L55 45 L78 72Z" fill={bodyColour} />
-            <path d="M62 73 L55 48 L72 70Z" fill={bodyLight} />
-            <path d="M135 78 L145 45 L122 72Z" fill={bodyColour} />
-            <path d="M138 73 L145 48 L128 70Z" fill={bodyLight} />
+          <path d="M65 78 L55 45 L78 72Z" fill={bodyColour} />
+          <path d="M62 73 L55 48 L72 70Z" fill={bodyLight} />
+          <path d="M135 78 L145 45 L122 72Z" fill={bodyColour} />
+          <path d="M138 73 L145 48 L128 70Z" fill={bodyLight} />
         </motion.g>
 
         {/* Owl Face */}
-        <ellipse cx="100" cy="100" rx="38" ry="35" fill={bodyLight} opacity="0.5" />
+        <ellipse
+          cx="100"
+          cy="100"
+          rx="38"
+          ry="35"
+          fill={bodyLight}
+          opacity="0.5"
+        />
 
         {/* Eye Sockets */}
         <circle cx="80" cy="98" r="18" fill={bodyDark} opacity="0.3" />
@@ -218,29 +283,34 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
 
         {/* Eyes */}
         <g>
-            {/* Left Eye */}
-            <motion.g
-                animate={{ scaleY: eyeState.leftOpen }}
-                transition={{ duration: 0.4, ease: "easeInOut"}}
-                style={{ originX: "80px", originY: "98px"}}
-            >
-                <circle cx="80" cy="98" r="14" fill={eyeWhite} />
-                <motion.circle
-                    cx="80"
-                    cy="98"
-                    r="8"
-                    fill={pupilColour}
-                    animate={{
-                        cx: state === "reminding" ? [80, 84, 76, 80] : state === "idle" ? [80, 82, 78, 80] : 80,
-                        scale: eyeState.pupilScale,
-                    }}  
-                    transition={{
-                        duration: state === "reminding" ? 0.8 : 3,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                    }}
-                />
-                {/* Highlight */}
+          {/* Left Eye */}
+          <motion.g
+            animate={{ scaleY: eyeState.leftOpen }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            style={{ originX: "80px", originY: "98px" }}
+          >
+            <circle cx="80" cy="98" r="14" fill={eyeWhite} />
+            <motion.circle
+              cx="80"
+              cy="98"
+              r="8"
+              fill={pupilColour}
+              animate={{
+                cx:
+                  state === "reminding"
+                    ? [80, 84, 76, 80]
+                    : state === "idle"
+                      ? [80, 82, 78, 80]
+                      : 80,
+                scale: eyeState.pupilScale,
+              }}
+              transition={{
+                duration: state === "reminding" ? 0.8 : 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            {/* Highlight */}
             <motion.circle
               cx="75"
               cy="93"
@@ -273,7 +343,12 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
               r="8"
               fill={pupilColour}
               animate={{
-                cx: state === "reminding" ? [120, 124, 116, 120] : state === "idle" ? [120, 122, 118, 120] : 120,
+                cx:
+                  state === "reminding"
+                    ? [120, 124, 116, 120]
+                    : state === "idle"
+                      ? [120, 122, 118, 120]
+                      : 120,
                 scale: eyeState.pupilScale,
               }}
               transition={{
@@ -338,7 +413,12 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
               fontSize="12"
               fontWeight="bold"
               animate={{ y: [55, 40, 55], opacity: [0, 1, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5,
+              }}
             >
               z
             </motion.text>
@@ -349,7 +429,12 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
               fontSize="9"
               fontWeight="bold"
               animate={{ y: [42, 28, 42], opacity: [0, 1, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              }}
             >
               z
             </motion.text>
@@ -383,7 +468,11 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
         <motion.g
           animate={{
             opacity:
-              state === "celebrating" ? [0.4, 0.7, 0.4] : state === "sleeping" ? 0.3 : 0.5,
+              state === "celebrating"
+                ? [0.4, 0.7, 0.4]
+                : state === "sleeping"
+                  ? 0.3
+                  : 0.5,
           }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
@@ -471,7 +560,14 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
           >
             <circle cx="155" cy="75" r="12" fill={beakColour} />
             <circle cx="155" cy="75" r="9" fill="#d4903f" />
-            <rect x="153" y="60" width="4" height="8" rx="2" fill={beakColour} />
+            <rect
+              x="153"
+              y="60"
+              width="4"
+              height="8"
+              rx="2"
+              fill={beakColour}
+            />
             <motion.line
               x1="145"
               y1="68"
@@ -502,10 +598,22 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
           <motion.g
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, type: "spring", stiffness: 300, damping: 15 }}
+            transition={{
+              delay: 0.3,
+              type: "spring",
+              stiffness: 300,
+              damping: 15,
+            }}
           >
             {/* Bubble */}
-            <rect x="150" y="42" width="40" height="24" rx="12" fill={bodyLight} />
+            <rect
+              x="150"
+              y="42"
+              width="40"
+              height="24"
+              rx="12"
+              fill={bodyLight}
+            />
             {/* Tail */}
             <polygon points="158,66 150,76 166,66" fill={bodyLight} />
             {/* Text */}
@@ -517,7 +625,11 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
               fontSize="12"
               fontWeight="bold"
               animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             >
               Welcome!
             </motion.text>
@@ -528,9 +640,9 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
         {state === "celebrating" && (
           <g>
             {[0, 60, 120, 180, 240, 300].map((angle, i) => {
-              const rad = (angle * Math.PI) / 180
-              const x = 100 + Math.cos(rad) * 70
-              const y = 105 + Math.sin(rad) * 70
+              const rad = (angle * Math.PI) / 180;
+              const x = 100 + Math.cos(rad) * 70;
+              const y = 105 + Math.sin(rad) * 70;
               return (
                 <motion.text
                   key={i}
@@ -552,11 +664,11 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
                 >
                   {"*"}
                 </motion.text>
-              )
+              );
             })}
           </g>
         )}
       </motion.g>
-        </svg>
-    )
+    </svg>
+  );
 }
