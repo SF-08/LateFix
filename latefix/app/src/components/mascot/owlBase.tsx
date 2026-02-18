@@ -240,9 +240,323 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
                         ease: "easeInOut",
                     }}
                 />
-                
-            </motion.g>
+                {/* Highlight */}
+            <motion.circle
+              cx="75"
+              cy="93"
+              r="3"
+              fill="#fff"
+              animate={{
+                opacity: state === "sleeping" ? 0 : [0.8, 1, 0.8],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <motion.circle
+              cx="83"
+              cy="96"
+              r="1.5"
+              fill="#fff"
+              opacity={state === "sleeping" ? 0 : 0.6}
+            />
+          </motion.g>
 
+          {/* Right eye */}
+          <motion.g
+            animate={{ scaleY: eyeState.rightOpen }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            style={{ originX: "120px", originY: "98px" }}
+          >
+            <circle cx="120" cy="98" r="14" fill={eyeWhite} />
+            <motion.circle
+              cx="120"
+              cy="98"
+              r="8"
+              fill={pupilColour}
+              animate={{
+                cx: state === "reminding" ? [120, 124, 116, 120] : state === "idle" ? [120, 122, 118, 120] : 120,
+                scale: eyeState.pupilScale,
+              }}
+              transition={{
+                duration: state === "reminding" ? 0.8 : 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.circle
+              cx="115"
+              cy="93"
+              r="3"
+              fill="#fff"
+              animate={{
+                opacity: state === "sleeping" ? 0 : [0.8, 1, 0.8],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <motion.circle
+              cx="123"
+              cy="96"
+              r="1.5"
+              fill="#fff"
+              opacity={state === "sleeping" ? 0 : 0.6}
+            />
+          </motion.g>
         </g>
 
+        {/* Sleeping Z's */}
+        {state === "sleeping" && (
+          <g>
+            {/* Closed eyes - curved lines */}
+            <motion.path
+              d="M68 98 Q80 103 92 98"
+              stroke={pupilColour}
+              strokeWidth="2.5"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <motion.path
+              d="M108 98 Q120 103 132 98"
+              stroke={pupilColour}
+              strokeWidth="2.5"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <motion.text
+              x="145"
+              y="70"
+              fill={belly}
+              fontSize="16"
+              fontWeight="bold"
+              animate={{ y: [70, 55, 70], opacity: [0, 1, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              z
+            </motion.text>
+            <motion.text
+              x="155"
+              y="55"
+              fill={belly}
+              fontSize="12"
+              fontWeight="bold"
+              animate={{ y: [55, 40, 55], opacity: [0, 1, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            >
+              z
+            </motion.text>
+            <motion.text
+              x="163"
+              y="42"
+              fill={belly}
+              fontSize="9"
+              fontWeight="bold"
+              animate={{ y: [42, 28, 42], opacity: [0, 1, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            >
+              z
+            </motion.text>
+          </g>
+        )}
+
+        {/* Beak */}
+        <motion.path
+          d="M93 108 L100 118 L107 108Z"
+          fill={beakColor}
+          animate={{
+            d:
+              state === "celebrating"
+                ? [
+                    "M93 108 L100 118 L107 108Z",
+                    "M91 106 L100 120 L109 106Z",
+                    "M93 108 L100 118 L107 108Z",
+                  ]
+                : state === "reminding"
+                  ? [
+                      "M93 108 L100 118 L107 108Z",
+                      "M91 106 L100 120 L109 106Z",
+                      "M93 108 L100 118 L107 108Z",
+                    ]
+                  : "M93 108 L100 118 L107 108Z",
+          }}
+          transition={{ duration: 0.6, repeat: Infinity }}
+        />
+
+        {/* Blush marks */}
+        <motion.g
+          animate={{
+            opacity:
+              state === "celebrating" ? [0.4, 0.7, 0.4] : state === "sleeping" ? 0.3 : 0.5,
+          }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        >
+          <ellipse cx="65" cy="108" rx="8" ry="4" fill={blush} opacity="0.4" />
+          <ellipse cx="135" cy="108" rx="8" ry="4" fill={blush} opacity="0.4" />
+        </motion.g>
+
+        {/* Sleep cap for sleeping state */}
+        {state === "sleeping" && (
+          <motion.g
+            animate={{ rotate: [0, 2, -2, 0] }}
+            transition={{ duration: 4, repeat: Infinity }}
+            style={{ originX: "100px", originY: "70px" }}
+          >
+            <path
+              d="M60 82 Q65 50 100 40 Q135 50 140 82 Z"
+              fill={capColour}
+              opacity="0.9"
+            />
+            <path
+              d="M60 82 Q100 75 140 82"
+              stroke={belly}
+              strokeWidth="4"
+              fill="none"
+              opacity="0.5"
+            />
+            <motion.circle
+              cx="100"
+              cy="38"
+              r="5"
+              fill={belly}
+              animate={{ y: [0, -3, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+          </motion.g>
+        )}
+
+        {/* Party hat for celebrating */}
+        {state === "celebrating" && (
+          <motion.g
+            animate={{ rotate: [-5, 5, -5] }}
+            transition={{ duration: 0.5, repeat: Infinity }}
+            style={{ originX: "100px", originY: "75px" }}
+          >
+            <path d="M75 78 L100 35 L125 78Z" fill={beakColour} />
+            <path d="M80 78 L100 40 L120 78Z" fill="#e85d75" opacity="0.7" />
+            <circle cx="100" cy="35" r="4" fill="#FFD700" />
+            {/* Confetti dots */}
+            <motion.circle
+              cx="85"
+              cy="60"
+              r="2"
+              fill="#4ECDC4"
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 0.5, repeat: Infinity, delay: 0 }}
+            />
+            <motion.circle
+              cx="110"
+              cy="55"
+              r="2"
+              fill="#FFD700"
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 0.5, repeat: Infinity, delay: 0.2 }}
+            />
+            <motion.circle
+              cx="95"
+              cy="50"
+              r="1.5"
+              fill="#FF6B6B"
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 0.5, repeat: Infinity, delay: 0.4 }}
+            />
+          </motion.g>
+        )}
+
+        {/* Alarm bell for reminding state */}
+        {state === "reminding" && (
+          <motion.g
+            animate={{
+              rotate: [-15, 15, -15],
+              x: [-2, 2, -2],
+            }}
+            transition={{ duration: 0.15, repeat: Infinity }}
+            style={{ originX: "155px", originY: "75px" }}
+          >
+            <circle cx="155" cy="75" r="12" fill={beakColour} />
+            <circle cx="155" cy="75" r="9" fill="#d4903f" />
+            <rect x="153" y="60" width="4" height="8" rx="2" fill={beakColour} />
+            <motion.line
+              x1="145"
+              y1="68"
+              x2="140"
+              y2="62"
+              stroke={beakColour}
+              strokeWidth="2"
+              strokeLinecap="round"
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 0.3, repeat: Infinity }}
+            />
+            <motion.line
+              x1="165"
+              y1="68"
+              x2="170"
+              y2="62"
+              stroke={beakColour}
+              strokeWidth="2"
+              strokeLinecap="round"
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 0.3, repeat: Infinity, delay: 0.15 }}
+            />
+          </motion.g>
+        )}
+
+        {/* Waving speech bubble */}
+        {state === "waving" && (
+          <motion.g
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, type: "spring", stiffness: 300, damping: 15 }}
+          >
+            {/* Bubble */}
+            <rect x="150" y="42" width="40" height="24" rx="12" fill={bodyLight} />
+            {/* Tail */}
+            <polygon points="158,66 150,76 166,66" fill={bodyLight} />
+            {/* Text */}
+            <motion.text
+              x="170"
+              y="58"
+              textAnchor="middle"
+              fill={pupilColour}
+              fontSize="12"
+              fontWeight="bold"
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              Welcome!
+            </motion.text>
+          </motion.g>
+        )}
+
+        {/* Stars around for celebrating */}
+        {state === "celebrating" && (
+          <g>
+            {[0, 60, 120, 180, 240, 300].map((angle, i) => {
+              const rad = (angle * Math.PI) / 180
+              const x = 100 + Math.cos(rad) * 70
+              const y = 105 + Math.sin(rad) * 70
+              return (
+                <motion.text
+                  key={i}
+                  x={x}
+                  y={y}
+                  fontSize="10"
+                  fill="#FFD700"
+                  textAnchor="middle"
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0.5, 1.2, 0.5],
+                    y: [y, y - 10, y],
+                  }}
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    delay: i * 0.15,
+                  }}
+                >
+                  {"*"}
+                </motion.text>
+              )
+            })}
+          </g>
+        )}
+      </motion.g>
         </svg>
+    )
+}
