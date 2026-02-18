@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import type { MascotState } from './components/mascot/owlBase';
-import OwlBase from './components/mascot/owlBase';
+import {OwlBase} from './components/mascot/owlBase';
 import {
   useTimeBasedState,
   defaultSchedule,
@@ -17,6 +17,10 @@ export default function App() {
       <OwlBase state={mascotState} size={200} />
     </View>
   );
+
+  if (!mascotState || !timeBasedState) {
+  throw new Error('Missing mascot or time-based state.')
+}
 }
 
 
