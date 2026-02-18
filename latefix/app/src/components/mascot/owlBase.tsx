@@ -282,7 +282,7 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
         <circle cx="120" cy="98" r="18" fill={bodyDark} opacity="0.3" />
 
         {/* Eyes */}
-        <g>
+        <motion.g>
           {/* Left Eye */}
           <motion.g
             animate={{ scaleY: eyeState.leftOpen }}
@@ -375,11 +375,11 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
               opacity={state === "sleeping" ? 0 : 0.6}
             />
           </motion.g>
-        </g>
+        </motion.g>
 
         {/* Sleeping Z's */}
         {state === "sleeping" && (
-          <g>
+          <motion.g>
             {/* Closed eyes - curved lines */}
             <motion.path
               d="M68 98 Q80 103 92 98"
@@ -438,7 +438,7 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
             >
               z
             </motion.text>
-          </g>
+          </motion.g>
         )}
 
         {/* Beak */}
@@ -638,7 +638,7 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
 
         {/* Stars around for celebrating */}
         {state === "celebrating" && (
-          <g>
+          <motion.g>
             {[0, 60, 120, 180, 240, 300].map((angle, i) => {
               const rad = (angle * Math.PI) / 180;
               const x = 100 + Math.cos(rad) * 70;
@@ -666,7 +666,7 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
                 </motion.text>
               );
             })}
-          </g>
+          </motion.g>
         )}
       </motion.g>
     </svg>
