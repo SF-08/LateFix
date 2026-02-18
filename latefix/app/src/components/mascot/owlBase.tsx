@@ -444,7 +444,7 @@ export function OwlBase({ state, size = 100, className = "" }: OwlBaseProps) {
         {/* Beak */}
         <motion.path
           d="M93 108 L100 118 L107 108Z"
-          fill={beakColor}
+          fill={beakColour}
           animate={{
             d:
               state === "celebrating"
